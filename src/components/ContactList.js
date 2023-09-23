@@ -3,18 +3,18 @@ import ContactData from "./ContactData"
 import { useEffect } from "react";
 import { loadContact } from "../actions/contacts";
 
-export default function ContactList() {
+export default function ContactList(filter) {
 
     const contacts = useSelector(state => state.contacts)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(loadContact())
-    }, [dispatch])
+        dispatch(loadContact(filter))
+    }, [dispatch, filter])
 
     const contactsNode = contacts.map((item, index) => (<ContactData contact={item} key={index} />));
     return (
-        <div>
+        <div className="contact-list">
             {contactsNode}
         </div>
     )

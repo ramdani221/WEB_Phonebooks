@@ -2,29 +2,27 @@ import { BrowserRouter as Router, Routes, Route, Outlet, Link } from "react-rout
 import './App.css';
 import ContactBox from "./components/ContactBox";
 import ContactAdd from "./components/ContactAdd";
+import UpdateAvatar from "./components/UpdateAvatar";
 
 export default function App() {
 
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<ContactBox />} />
-            <Route path="add" element={<ContactAdd />} />
-            <Route path="*" element={<NoMatch />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<ContactBox />} />
+          <Route path="add" element={<ContactAdd />} />
+          <Route path="avatar" element={<UpdateAvatar />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
 function Layout() {
   return (
-    <div>
-      <Outlet />
-    </div>
+    <Outlet />
   );
 }
 

@@ -7,44 +7,41 @@ const request = axios.create({
     headers: { 'X-Custom-Header': 'foobar' }
 });
 
-const loadContactFailed = () => ({
-    type: 'LOAD_CONTACT_FAILED'
-})
-
-const loadContactSuccess = (contacts) => ({
-    type: 'LOAD_CONTACT_SUCCESS',
-    contacts
-})
-
-export const loadContact = () => dispatch => request.get('phonebooks').then(({ data }) => {
-    dispatch(loadContactSuccess(data.phonebooks))
+export const loadContact = ({filter}) => dispatch => request.get('phonebooks', {params: filter}).then(({ data }) => {
+    dispatch({ type: 'LOAD_CONTACT_SUCCESS', contacts: data.phonebooks })
 }).catch(() => {
-    dispatch(loadContactFailed())
+    dispatch({ type: 'LOAD_CONTACT_FAILED' })
 })
 
-const addContactFailed = () => ({
-    type: 'ADD_CONTACT_FAILED'
+export const addContact = (contact) => dispatch => request.post('phonebooks', contact).then(() => {
+    dispatch({ type: 'ADD_CONTACT_SUCCESS' })
+}).catch(() => {
+    dispatch({ type: 'ADD_CONTACT_FAILED' })
 })
 
-const addContactSuccess = (contacts) => ({
-    type: 'ADD_CONTACT_SUCCESS',
-    contacts
+export const updateContact = (id, contact) => dispatch => request.put(`phonebooks/${id}`, contact).then(({ data }) => {
+    dispatch({ type: 'UPDATE_CONTACT_SUCCESS', data })
+}).catch(() => {
+    dispatch({ type: 'UPDATE_CONTACT_FAILED' })
 })
 
-export const addContact = () => dispatch => request.post('phonebooks').then(({data}) => {
-    dispatch(addContactSuccess(data))
-}).catch (() => {
-    dispatch(addContactFailed())
+export const deleteContact = (id) => dispatch => request.delete(`phonebooks/${id}`).then(() => {
+    dispatch({ type: 'DELETE_CONTACT_SUCCESS', id })
+}).catch(() => {
+    dispatch({ type: 'DELETE_CONTACT_FAILED' })
 })
 
-export const updateContact = () => ({
-    type: 'UPDATE_CONTACT'
+export const updateAvatar = (id, file) => dispatch => {
+    console.log(file)
+return request.put(`phonebooks/${id}/avatar`, file, {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+}).then(({ data }) => {
+    console.log(id, file)
+    dispatch({ type: 'UPDATE_AVATAR_SUCCESS', data })
+}).catch(() => {
+    console.log(id, file)
+    dispatch({ type: 'UPDATE_AVATAR_FAILED' })
 })
-
-export const deleteContact = () => ({
-    type: 'UPDATE_CONTACT'
-})
-
-export const updateAvatar = () => ({
-    type: 'UPDATE_AVATAR'
-})
+}

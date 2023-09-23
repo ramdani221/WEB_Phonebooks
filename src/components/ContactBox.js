@@ -1,28 +1,24 @@
 import ContactList from './ContactList';
 import ContactBar from './ContactBar';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import {  useState } from 'react';
 
 export default function ContactBox() {
 
-    const [contacts,setContacts] = useState([])
-
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState({page: 1, limit: 10, keyword: '', sort: 'asc'});
 
     const filterContact = (keyword) => {
-        setFilter(keyword);
+        console.log(filter)
+        setFilter({...filter, keyword});
     }
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/api/phonebooks').then(({data}) => {
-            setContacts(data.phonebooks)
-        }).catch ((err) => console.log(err))
-    }, [setContacts])
+    const sortContatc = (sort) => {
+        setFilter({...filter, sort})
+    }
 
     return (
         <div className="App-header">
-                <ContactBar find={filterContact} />
-                <ContactList contacts={contacts} filter={filter} />
+                <ContactBar find={filterContact} sort={sortContatc}/>
+                <ContactList filter={filter} />
         </div>
     )
 }

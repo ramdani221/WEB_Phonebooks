@@ -1,12 +1,17 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { addContact } from "../actions/contacts"
+import { useDispatch } from "react-redux"
 
 
 export default function ContactAdd() {
 
+    const navigate = useNavigate()
     const [newContatc, setNewContatc] = useState({name: '', phone: ''})
+    const dispatch = useDispatch()
     const submit = () => {
-
+        dispatch(addContact(newContatc))
+        navigate('/')
     }
 
     return (

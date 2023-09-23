@@ -1,13 +1,21 @@
 import { faArrowDownAZ, faArrowDownZA, faMagnifyingGlass, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function ContactBar({find}) {
+export default function ContactBar({find, sort}) {
+
+    const [btnShow, setBtnShow] = useState(true)
+    const btnClick = (type) => {
+        sort(type)
+        setBtnShow(!btnShow)
+    }
+
     return (
-        <div>
-            <button><FontAwesomeIcon icon={faArrowDownZA}/></button>
-            <button><FontAwesomeIcon icon={faArrowDownAZ}/></button>
-            <div>
+        <div className="contact-bar">
+            {!btnShow && <button onClick={() => btnClick('desc')}><FontAwesomeIcon icon={faArrowDownZA}/></button>}
+           {btnShow && <button onClick={() => btnClick('asc')}><FontAwesomeIcon icon={faArrowDownAZ}/></button>}
+            <div className="search">
                 <span><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
                 <input type="text" name="keyword" id="keyword" onKeyUp={(e) => find(e.target.value)}/>
             </div>
