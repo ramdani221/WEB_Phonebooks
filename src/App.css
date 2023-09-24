@@ -158,9 +158,103 @@ img{
   outline: none;
 }
 
+.add-contact {
+  margin: auto;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+.add-contact form {
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
+.add-contact input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+  outline: none;
+}
+
+.btn-form-add {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.btn-form-add button, .btn-form-add a {
+  flex-grow: 1;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  background-color: rgb(186, 133, 34);
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.update-avatar {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.update-avatar form {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.update-avatar input {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.btn-form-update {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.btn-form-update button, .btn-form-update a {
+  flex-grow: 1;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  background-color: rgb(186, 133, 34);
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.preview {
+  margin: auto;
+  width: 200px;
+  height: 200px;
+}
+.preview img {
+  object-fit: contain;
+}
+
 @media only screen and (max-width: 610px) {
   .contact-data {
     width: 95%;
     min-width: fit-content;
+  }
+
+  .add-contact {
+    width: 100%;
+    min-width: 150px;
+  }
+
+  .update-avatar {
+    width: 100%;
+    min-width: 200px;
   }
 }

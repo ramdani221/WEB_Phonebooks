@@ -5,7 +5,7 @@ const contacts = (state = [], action) => {
         case 'ADD_CONTACT_SUCCES':
             return state;
         case 'UPDATE_CONTACT_SUCCESS':
-            const newstate = [...state.filter((contacts) => contacts.id !== action.data.id), action.data];
+            const newstate = [...(state.filter((contacts) => contacts.id !== action.data.id)), action.data];
             newstate.sort((a, b) => {
                 if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
                 if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;

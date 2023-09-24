@@ -20,7 +20,7 @@ export default function ContactData({ contact }) {
     }
 
     const toAvatar = () => {
-        navigate('/avatar', { state: { id: contact.id } })
+        navigate('/avatar', { state: { id: contact.id, avatar: contact.avatar } })
     }
 
     if (isEdite) {
@@ -28,15 +28,19 @@ export default function ContactData({ contact }) {
             <div className="contact-data">
                 <div className="btn-image">
                     <button className="btn-avatar">
-                        {(contact.avatar ?
-                            <img src={"http://localhost:3000/images/" + contact.avatar} alt="avatar" /> :
-                            <img src="http://localhost:3000/images/user-tie-solid.svg" alt="avatar" />)}
+                        <img src={"http://localhost:3000/images/" +
+                            (contact.avatar ? contact.avatar : "user-tie-solid.svg")}
+                            alt="avatar" />
                     </button>
                 </div>
                 <div className="identity">
                     <form onSubmit={submit}>
-                        <input type="text" name="name" value={newData.name} onChange={e => setNewData({ ...newData, name: e.target.value })} />
-                        <input type="text" name="phone" value={newData.phone} onChange={e => setNewData({ ...newData, phone: e.target.value })} />
+                        <input type="text" name="name"
+                            value={newData.name}
+                            onChange={e => setNewData({ ...newData, name: e.target.value })} />
+                        <input type="text" name="phone"
+                            value={newData.phone}
+                            onChange={e => setNewData({ ...newData, phone: e.target.value })} />
                         <div className="btn-identity">
                             <button type="submit"><FontAwesomeIcon icon={faFloppyDisk} /></button>
                         </div>
@@ -47,18 +51,22 @@ export default function ContactData({ contact }) {
         return (
             <div className="contact-data">
                 <div className="btn-image">
-                <button className="btn-avatar" onClick={toAvatar}>
-                        {(contact.avatar ?
-                            <img src={"http://localhost:3000/images/" + contact.avatar} alt="avatar" /> :
-                            <img src="http://localhost:3000/images/user-tie-solid.svg" alt="avatar" />)}
+                    <button className="btn-avatar" onClick={toAvatar}>
+                        <img src={"http://localhost:3000/images/" +
+                            (contact.avatar ? contact.avatar : "user-tie-solid.svg")}
+                            alt="avatar" />
                     </button>
                 </div>
                 <div className="identity">
                     <p>{contact.name}</p>
                     <p>{contact.phone}</p>
                     <div className="btn-identity">
-                        <button onClick={() => setIsEdite(!isEdite)}><FontAwesomeIcon icon={faPenToSquare} /></button>
-                        <button type="button" onClick={() => dispatch(deleteContact(contact.id))}><FontAwesomeIcon icon={faTrashCan} /></button>
+                        <button onClick={() => setIsEdite(!isEdite)}>
+                            <FontAwesomeIcon icon={faPenToSquare} />
+                        </button>
+                        <button type="button" onClick={() => dispatch(deleteContact(contact.id))}>
+                            <FontAwesomeIcon icon={faTrashCan} />
+                        </button>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { updateAvatar } from "../actions/contacts";
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export default function UpdateAvatar() {
 
@@ -12,14 +12,12 @@ export default function UpdateAvatar() {
     const { state } = useLocation()
     const [selectedImage, setSelectedImage] = useState();
 
+    console.log(state)
+
     const imageChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage(e.target.files[0]);
         }
-    };
-
-    const removeSelectedImage = () => {
-        setSelectedImage();
     };
 
     const submit = () => {
@@ -31,25 +29,29 @@ export default function UpdateAvatar() {
     }
 
     return (
-        <>
-            <div>
-                <form onSubmit={submit}>
-                    <input accept="image/*" type="file" onChange={imageChange} />
+        <div className="update-avatar">
+            <form onSubmit={submit}>
+                <input accept="image/*" type="file" onChange={imageChange} />
+                <div className="btn-form-update">
                     <button type="submit">save</button>
-                </form>
+                    <Link to="/">cancel</Link>
+                </div>
+            </form>
 
-                {selectedImage && (
-                    <div>
-                        <img
-                            src={URL.createObjectURL(selectedImage)}
-                            alt="Thumb"
-                        />
-                        <button onClick={removeSelectedImage}>
-                            Remove This Image
-                        </button>
-                    </div>
-                )}
-            </div>
-        </>
+            {(selectedImage ? (
+                <div className="preview">
+                    <img
+                        src={URL.createObjectURL(selectedImage)}
+                        alt="Thumb"
+                    />
+                </div>
+            ) :
+                (<div className="preview">
+                    <img src={"http://localhost:3000/images/" +
+                        (state.avatar ? state.avatar : "user-tie-solid.svg")} alt="avatar" />
+                </div>
+                )
+            )}
+        </div>
     );
 }
