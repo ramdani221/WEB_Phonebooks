@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function ContactBar({find, sort}) {
 
-    const [btnShow, setBtnShow] = useState(true)
+    const [btnShow, setBtnShow] = useState(false)
     const btnClick = (type) => {
         sort(type)
         setBtnShow(!btnShow)

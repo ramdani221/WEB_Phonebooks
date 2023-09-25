@@ -1,6 +1,6 @@
 import { faFloppyDisk, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteContact, updateContact } from "../actions/contacts";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,10 @@ export default function ContactData({ contact }) {
     const [isEdite, setIsEdite] = useState(false);
     const dispatch = useDispatch();
     const [newData, setNewData] = useState({ name: contact.name, phone: contact.phone });
+
+    useEffect(() => {
+        setNewData({ name: contact.name, phone: contact.phone })
+    }, [contact])
 
     const submit = (e) => {
         e.preventDefault();

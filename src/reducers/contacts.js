@@ -1,21 +1,25 @@
-const contacts = (state = [], action) => {
+const contacts = (state = {phonebooks: [], page: 1, limit: 3, total: 1, pages: 1}, action) => {
     switch (action.type) {
         case 'LOAD_CONTACT_SUCCESS':
             return action.contacts
         case 'ADD_CONTACT_SUCCES':
             return state;
         case 'UPDATE_CONTACT_SUCCESS':
-            const newstate = [...(state.filter((contacts) => contacts.id !== action.data.id)), action.data];
-            newstate.sort((a, b) => {
+            const update = {phonebooks: [...(state.phonebooks.filter((contacts) => contacts.id !== action.data.id)), action.data]};
+            console.log(update)
+            update.phonebooks.sort((a, b) => {
                 if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
                 if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                 return 0;
             });
-            return newstate;
+            console.log({...state, ...update})
+            return {...state, ...update};
         case 'DELETE_CONTACT_SUCCESS':
-            return state.filter((contacts) => contacts.id !== action.id);
+            return {...state, phonebooks: state.phonebooks.filter((contacts) => contacts.id !== action.id)}
         case 'UPDATE_AVATAR_SUCCESS':
             return state;
+        case 'LOAD_PAGE_SUCCESS':
+            return {...state, phonebooks: [...state.phonebooks, ...action.contacts.phonebooks], page: action.contacts.page}
         case 'LOAD_CONTACT_FAILED':
         case 'ADD_CONTACT_FAILED':
         case 'UPDATE_CONTACT_FAILED':
