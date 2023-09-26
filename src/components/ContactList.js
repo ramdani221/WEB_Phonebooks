@@ -11,31 +11,28 @@ export default function ContactList({ filter }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     
-    const nextPage = useCallback(() => {
+
+    const handleScroll = useCallback(() => {
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
+            return;
+        }
         setIsLoading(true);
         setError(null);
         if (contacts.page >= contacts.pages) return setIsLoading(false);
         dispatch(loadPage({ ...filter, ...pageNum }))
         setPageNum({ page: (pageNum.page + 1) })
         setIsLoading(false)
-    }, [pageNum, dispatch, contacts.page, contacts.pages, filter])
-
-    const handleScroll = useCallback(() => {
-        if (window.innerHeight + document.documentElement.scrollTop <= document.documentElement.offsetHeight - 100 || isLoading) {
-            return;
-        }
-        nextPage();
-    }, [nextPage, isLoading]);
+    }, [pageNum, dispatch, contacts.page, contacts.pages, filter, isLoading]);
 
     useEffect(() => {
+        setPageNum({page: 2})
         dispatch(loadContact(filter))
     }, [dispatch, filter])
 
     useEffect(() => {
-        if(window.innerHeight >= document.documentElement.offsetHeight) return () => nextPage()
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [isLoading, handleScroll, nextPage]);
+    }, [isLoading, handleScroll]);
 
     
 

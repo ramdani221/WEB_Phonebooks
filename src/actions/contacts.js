@@ -7,7 +7,7 @@ const request = axios.create({
     headers: { 'X-Custom-Header': 'foobar' }
 });
 
-export const loadContact = ({filter}) => dispatch => request.get('phonebooks', {params: filter}).then(({ data }) => {
+export const loadContact = (filter) => dispatch => request.get('phonebooks', {params: filter}).then(({ data }) => {
     dispatch({ type: 'LOAD_CONTACT_SUCCESS', contacts: data })
 }).catch(() => {
     dispatch({ type: 'LOAD_CONTACT_FAILED' })
@@ -41,7 +41,7 @@ export const updateAvatar = (id, file) => dispatch => request.put(`phonebooks/${
     dispatch({ type: 'UPDATE_AVATAR_FAILED' })
 });
 
-export const loadPage = (filter) => dispatch => {
+export const loadPage = (filter) => dispatch => { console.log(filter)
     return request.get('phonebooks', {params: filter}).then(({ data }) => {
     dispatch({ type: 'LOAD_PAGE_SUCCESS', contacts: data })
 }).catch(() => {
