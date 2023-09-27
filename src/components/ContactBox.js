@@ -7,7 +7,6 @@ export default function ContactBox() {
     const [filter, setFilter] = useState({ keyword: '', sort: 'asc' });
 
     const filterContact = (keyword) => {
-        console.log(filter)
         setFilter({ ...filter, keyword });
     }
 

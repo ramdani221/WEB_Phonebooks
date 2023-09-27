@@ -12,8 +12,6 @@ export default function UpdateAvatar() {
     const { state } = useLocation()
     const [selectedImage, setSelectedImage] = useState();
 
-    console.log(state)
-
     const imageChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage(e.target.files[0]);
@@ -22,7 +20,6 @@ export default function UpdateAvatar() {
 
     const submit = () => {
         const formData = new FormData()
-        console.log('gambar', selectedImage)
         formData.append('avatar', selectedImage)
         dispatch(updateAvatar(state.id, formData))
         navigate('/')
