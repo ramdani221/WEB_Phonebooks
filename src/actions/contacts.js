@@ -8,12 +8,14 @@ const request = axios.create({
 });
 
 export const loadContact = (filter) => dispatch => request.get('phonebooks', {params: filter}).then(({ data }) => {
+    console.log(data)
     dispatch({ type: 'LOAD_CONTACT_SUCCESS', contacts: data })
 }).catch(() => {
     dispatch({ type: 'LOAD_CONTACT_FAILED' })
 });
 
-export const addContact = (contact) => dispatch => request.post('phonebooks', contact).then(() => {
+export const addContact = (contact) => dispatch => request.post('phonebooks', contact).then(({data}) => {
+    console.log(data)
     dispatch({ type: 'ADD_CONTACT_SUCCESS' })
 }).catch(() => {
     dispatch({ type: 'ADD_CONTACT_FAILED' })

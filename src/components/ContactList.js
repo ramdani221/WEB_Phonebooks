@@ -19,15 +19,15 @@ export default function ContactList({ filter }) {
         setIsLoading(true);
         setError(null);
         if (contacts.page >= contacts.pages) return setIsLoading(false);
-        dispatch(loadPage({ ...filter, ...pageNum }))
+        dispatch(loadPage({ ...filter, ...pageNum, limit: contacts.limit }))
         setPageNum({ page: (pageNum.page + 1) })
         setIsLoading(false)
-    }, [pageNum, dispatch, contacts.page, contacts.pages, filter, isLoading]);
+    }, [pageNum, dispatch, contacts.page, contacts.pages, filter, isLoading, contacts.limit]);
 
     useEffect(() => {
         setPageNum({page: 2})
-        dispatch(loadContact(filter))
-    }, [dispatch, filter])
+        dispatch(loadContact({...filter, limit: contacts.limit}))
+    }, [dispatch, filter, contacts.limit])
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);

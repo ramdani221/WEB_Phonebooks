@@ -1,4 +1,4 @@
-const contacts = (state = { phonebooks: [], page: 1, limit: 3, total: 1, pages: 1 }, action) => {
+const contacts = (state = { phonebooks: [], page: 1, limit: 60, total: 1, pages: 1 }, action) => {
     switch (action.type) {
         case 'LOAD_CONTACT_SUCCESS':
             return action.contacts
