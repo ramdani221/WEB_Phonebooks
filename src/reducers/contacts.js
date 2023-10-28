@@ -1,7 +1,7 @@
 const contacts = (state = { phonebooks: [], page: 1, limit: 60, total: 1, pages: 1 }, action) => {
     switch (action.type) {
         case 'LOAD_CONTACT_SUCCESS':
-            return action.contacts
+            return { ...action.contacts, ...action.sort }
         case 'ADD_CONTACT_SUCCES':
             return state;
         case 'UPDATE_CONTACT_SUCCESS':
@@ -11,7 +11,14 @@ const contacts = (state = { phonebooks: [], page: 1, limit: 60, total: 1, pages:
                 if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                 return 0;
             });
-            return { ...state, ...update };
+            if (state.sort === "desc") update.phonebooks.reverse()
+            return {
+                ...state,
+                phonebooks: update.phonebooks.filter(contact => {
+                    return contact.name.toLowerCase().includes(state.keyword.toLowerCase()) ||
+                        contact.phone.toLowerCase().includes(state.keyword.toLowerCase())
+                })
+            };
         case 'DELETE_CONTACT_SUCCESS':
             return { ...state, phonebooks: state.phonebooks.filter((contacts) => contacts.id !== action.id) }
         case 'UPDATE_AVATAR_SUCCESS':
